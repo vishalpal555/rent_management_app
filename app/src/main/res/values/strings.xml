@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">RentManagement</string>
+    <string name="verify_user_alert_msg">Please click verification link sent in your email\nIf already verified please logout and login again</string>
+</resources>
