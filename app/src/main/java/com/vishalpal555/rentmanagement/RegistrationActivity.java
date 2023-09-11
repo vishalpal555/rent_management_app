@@ -39,6 +39,7 @@ public class RegistrationActivity extends AppCompatActivity {
     private EditText passwordInput;
     private EditText passwordConfirmInput;
     private FirebaseAuth mAuth;
+    Validator validator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,10 +87,11 @@ public class RegistrationActivity extends AppCompatActivity {
         }
 
         registerSubmitBtn.setOnClickListener(view -> {
+            validator = new Validator();
             if(fullnameInput.getText().toString().isBlank() || usernameInput.getText().toString().isBlank() ||
             passwordInput.getText().toString().isBlank() || passwordConfirmInput.getText().toString().isBlank()){
                 Toast.makeText(this, "Fields cannot be empty", Toast.LENGTH_SHORT).show();
-            } else if(!Validator.isEmail(usernameInput.getText().toString())){
+            } else if(!validator.isEmail(usernameInput.getText().toString())){
                 Toast.makeText(this, "Type Email correctly", Toast.LENGTH_SHORT).show();
             } else if (!passwordInput.getText().toString().equals(passwordConfirmInput.getText().toString())) {
                 Toast.makeText(this, "Password confirmation and password must be same", Toast.LENGTH_SHORT).show();

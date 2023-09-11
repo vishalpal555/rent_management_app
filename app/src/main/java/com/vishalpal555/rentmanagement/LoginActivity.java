@@ -32,6 +32,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextView passwordResetLink;
     private FirebaseAuth mAuth;
     EmailService emailService = new EmailService();
+    Validator validator;
 
     @Override
     public void onStart() {
@@ -68,10 +69,11 @@ public class LoginActivity extends AppCompatActivity {
         loginBtn.setOnClickListener(view -> {
             String username = usernameInput.getText().toString();
             String password = passwordInput.getText().toString();
+            validator = new Validator();
             if(!username.isEmpty() && !password.isEmpty()) {
                 if(username.isBlank() || password.isBlank()){
                     Toast.makeText(this, "Fields cannot be empty", Toast.LENGTH_LONG).show();
-                } else if (Validator.isEmail(username)) {
+                } else if (validator.isEmail(username)) {
                     mAuth.signInWithEmailAndPassword(username, password)
                             .addOnCompleteListener(task -> {
                                 if (task.isSuccessful()) {

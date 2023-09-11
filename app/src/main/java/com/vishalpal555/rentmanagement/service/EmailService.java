@@ -19,6 +19,7 @@ import com.vishalpal555.rentmanagement.global.RespCodes;
 /** @noinspection Since15*/
 public class EmailService {
     UpdateUser updateUser;
+    Validator validator;
     private static final String TAG = EmailService.class.getName();
     public void verifyUser(Activity activity, FirebaseUser firebaseUser, String displayName, String phoneNumber, Intent successNextIntent, Intent failureNextIntent){
         firebaseUser.sendEmailVerification().addOnCompleteListener(task -> {
@@ -51,7 +52,7 @@ public class EmailService {
     }
 
     public void resetPassword(Activity activity, FirebaseAuth mAuth, String email, Intent successNextIntent, Intent failureNextIntent){
-        if(Validator.isEmail(email)) {
+        if(validator.isEmail(email)) {
             mAuth.sendPasswordResetEmail(email)
                     .addOnFailureListener(e -> {
                         Log.e(TAG, "sendPasswordResetEmail error: ", e);

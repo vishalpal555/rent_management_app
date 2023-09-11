@@ -19,8 +19,16 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.vishalpal555.rentmanagement.entity.Tenant;
 import com.vishalpal555.rentmanagement.global.Constants;
+import com.vishalpal555.rentmanagement.global.MockData;
+import com.vishalpal555.rentmanagement.service.Validator;
 
+import java.time.LocalDate;
+import java.time.chrono.ChronoLocalDate;
+import java.util.HashMap;
 import java.util.Objects;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
@@ -36,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView mainActivityTextTrial;
     private TextView errorMsgMainActivity;
     private Button openGmailBtn;
+    private Validator validator;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,6 +115,20 @@ public class MainActivity extends AppCompatActivity {
             popupMenu.show();
         });
 
-
+        //firebase database
+        Button createDatabaseBtn = findViewById(R.id.createDatabaseBtn);
+        createDatabaseBtn.setOnClickListener(view -> {
+            if(firebaseUser != null && firebaseUser.isEmailVerified()){
+                Log.d(TAG, "firebase realtime database creation invoked");
+                FirebaseDatabase database = FirebaseDatabase.getInstance(Constants.FIREBASE_SERVER_REF);
+                Log.i(TAG, "onCreate: " +database.getReference());
+                DatabaseReference rentDatabaseRef = database.getReference(Constants.RENT_FIREBASE_REF);
+                String rentDatabaseId = rentDatabaseRef.push().getKey();
+                Log.d(TAG, "firebase realtime database created with id " +rentDatabaseId);
+                if (rentDatabaseId != null) {
+                    rentDatabaseRef.child(rentDatabaseId).setValue(MockData.room1(firebaseUser.getUid()));
+                }
+            }
+        });
     }
 }

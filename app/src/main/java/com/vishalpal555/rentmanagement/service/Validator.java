@@ -6,9 +6,17 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Validator {
-    public static boolean isEmail(String email){
+    public boolean isEmail(String email){
         Pattern pattern = Pattern.compile(Constants.EMAIL_REGEX);
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
+    }
+    public boolean isNumeric(String data){
+        try{
+            Integer.parseInt(data);
+            return true;
+        } catch (NumberFormatException e){
+            return false;
+        }
     }
 }
