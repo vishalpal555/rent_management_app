@@ -1,16 +1,17 @@
 package com.vishalpal555.rentmanagement.entity;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
 public class Room {
-    private String userUid;
     private String roomId;
     private String roomNumber;
     private String floorNumber;
@@ -18,10 +19,11 @@ public class Room {
     private long meterReading;
     private float amountPerUnit;
     private HashMap<String, String> comments;
-    private List<Tenant> tenants;
+    private List<Tenant> previousTenants;
+    private Tenant currentTenant;
+    private boolean isRoomVacant;
 
-    public Room(String userUid, String roomId, String roomNumber, String floorNumber, String meterSerial, long meterReading, float amountPerUnit) {
-        this.userUid = userUid;
+    public Room(String roomId, String roomNumber, String floorNumber, String meterSerial, long meterReading, float amountPerUnit) {
         this.roomId = roomId;
         this.roomNumber = roomNumber;
         this.floorNumber = floorNumber;
@@ -29,5 +31,8 @@ public class Room {
         this.meterReading = meterReading;
         this.amountPerUnit = amountPerUnit;
         this.comments = new HashMap<>();
+        this.isRoomVacant = true;
+        this.previousTenants = new ArrayList<>();
+        this.currentTenant = new Tenant();
     }
 }

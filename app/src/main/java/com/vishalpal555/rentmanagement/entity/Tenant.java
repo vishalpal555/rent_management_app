@@ -9,6 +9,7 @@ import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 
@@ -25,6 +26,10 @@ public class Tenant {
     private HashMap<String, String> comments;
     private boolean isTenantActive;
     private String phoneNumber;
+
+    public Tenant() {
+
+    }
 
     public boolean getIsTenantActive(){
         return joiningDate.isBefore(LocalDate.now()) && (leavingDate == null || leavingDate.isAfter(LocalDate.now()));
