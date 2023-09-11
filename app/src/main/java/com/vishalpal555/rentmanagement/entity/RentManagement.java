@@ -12,14 +12,12 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class RentManagement {
-    private String id;
     private List<String> admins;
     private List<String> employees;
     private List<Room> roomsList;
     private List<Tenant> tenantsList;
 
-    public RentManagement(String id, List<String> admins, List<String> employees) {
-        this.id = id;
+    public RentManagement(List<String> admins, List<String> employees) {
         this.admins = admins;
         this.employees = employees;
         this.roomsList = new ArrayList<>();
