@@ -9,10 +9,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 public class Room {
-    private String id;
-    private String userId;
+    private String userUid;
     private String roomId;
     private String roomNumber;
     private String floorNumber;
@@ -21,4 +19,15 @@ public class Room {
     private float amountPerUnit;
     private HashMap<String, String> comments;
     private List<Tenant> tenants;
+
+    public Room(String userUid, String roomId, String roomNumber, String floorNumber, String meterSerial, long meterReading, float amountPerUnit) {
+        this.userUid = userUid;
+        this.roomId = roomId;
+        this.roomNumber = roomNumber;
+        this.floorNumber = floorNumber;
+        this.meterSerial = meterSerial;
+        this.meterReading = meterReading;
+        this.amountPerUnit = amountPerUnit;
+        this.comments = new HashMap<>();
+    }
 }
