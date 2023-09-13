@@ -1,9 +1,11 @@
 package com.vishalpal555.rentmanagement.global;
 
+import com.vishalpal555.rentmanagement.entity.RentManagement;
 import com.vishalpal555.rentmanagement.entity.Room;
 import com.vishalpal555.rentmanagement.entity.Tenant;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -18,9 +20,8 @@ public class MockData {
             "1234567890"
     );
 
-    public static Room room1(String userUid){
+    public static Room room1(){
         return new Room(
-                userUid,
                 "A1",
                 "1",
                 "1",
@@ -28,5 +29,8 @@ public class MockData {
                 100,
                 6
         );
+    }
+    public static RentManagement rentManagement1(String adminId){
+        return new RentManagement(adminId);
     }
 }

@@ -17,9 +17,9 @@ public class RentManagement {
     private List<Room> roomsList;
     private List<Tenant> tenantsList;
 
-    public RentManagement(List<String> admins, List<String> employees) {
-        this.admins = admins;
-        this.employees = employees;
+    public RentManagement(String defaultAdmin) {
+        this.admins = new ArrayList<>(){{add(defaultAdmin);}};
+        this.employees = new ArrayList<>();
         this.roomsList = new ArrayList<>();
         this.tenantsList = new ArrayList<>();
     }
