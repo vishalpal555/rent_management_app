@@ -110,8 +110,6 @@ public class MainActivity extends AppCompatActivity {
             popupMenu.show();
         });
 
-
-
         EditText inputTrial = findViewById(R.id.editTextTrial);
         Button trialBtn = findViewById(R.id.btnTrial);
         trialBtn.setOnClickListener(view -> {

@@ -19,6 +19,7 @@ import com.vishalpal555.rentmanagement.entity.RentManagement;
 import com.vishalpal555.rentmanagement.global.Constants;
 import com.vishalpal555.rentmanagement.global.MockData;
 
+import java.util.List;
 import java.util.Objects;
 
 public class FirestoreCloudDbService {
@@ -52,4 +53,8 @@ public class FirestoreCloudDbService {
         });
     }
 
+    public void appendAdmins(Activity activity, String rentManagementId, List<String> newAdminList){
+        firestoreDocument = firestoreCollection.document(rentManagementId);
+
+    }
 }
