@@ -21,7 +21,7 @@ public class Room {
     private long meterReading;
     private float amountPerUnit;
     private HashMap<String, String> comments;
-    private List<Tenant> previousTenants;
+    private List<String> previousTenants;
     private Tenant currentTenant;
     private boolean isRoomVacant;
 

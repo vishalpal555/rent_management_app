@@ -14,8 +14,8 @@ import lombok.Setter;
 public class RentManagement {
     private List<String> admins;
     private List<String> employees;
-    private List<Room> roomsList;
-    private List<Tenant> tenantsList;
+    private List<String> roomsList;
+    private List<String> tenantsList;
 
     public RentManagement(String defaultAdmin) {
         this.admins = new ArrayList<>(){{add(defaultAdmin);}};
