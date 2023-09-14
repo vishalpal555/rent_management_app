@@ -13,12 +13,11 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.vishalpal555.rentmanagement.global.Constants;
-import com.vishalpal555.rentmanagement.service.FirestoreCloudDbService;
+import com.vishalpal555.rentmanagement.service.RentManagementFirestoreService;
 import com.vishalpal555.rentmanagement.service.Validator;
 
 import java.util.HashSet;
@@ -35,14 +34,14 @@ public class MainActivity extends AppCompatActivity {
     private TextView errorMsgMainActivity;
     private Button openGmailBtn;
     private Validator validator;
-    private FirestoreCloudDbService firestoreCloudDbService;
+    private RentManagementFirestoreService rentManagementFirestoreService;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mAuth = FirebaseAuth.getInstance();
         firebaseUser = mAuth.getCurrentUser();
-        firestoreCloudDbService = new FirestoreCloudDbService();
+        rentManagementFirestoreService = new RentManagementFirestoreService();
 
         ScheduledExecutorService userReloadSchedule = Executors.newSingleThreadScheduledExecutor();
         int delay = 0;
@@ -79,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
                 openGmailBtn.setVisibility(View.GONE);
 
                 //firebase document creation first time
-                firestoreCloudDbService.createRentManagementWithId(this, firebaseUser.getEmail());
+                rentManagementFirestoreService.createRentManagementWithId(this, firebaseUser.getEmail());
             } else {
                 errorMsgMainActivity.setText(getString(R.string.verify_user_alert_msg));
                 errorMsgMainActivity.setVisibility(View.VISIBLE);
@@ -114,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
         Button trialBtn = findViewById(R.id.btnTrial);
         trialBtn.setOnClickListener(view -> {
 //            Toast.makeText(this, "trial button clicked", Toast.LENGTH_LONG).show();
-            firestoreCloudDbService.appendAdmins(this, firebaseUser.getEmail(), new HashSet<>(){{add(inputTrial.getText().toString());}});
+            rentManagementFirestoreService.removeAdmins(this, firebaseUser.getEmail(), new HashSet<>(){{add(inputTrial.getText().toString());}});
         });
     }
 }

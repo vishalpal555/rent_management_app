@@ -4,37 +4,26 @@ import android.app.Activity;
 import android.util.Log;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.vishalpal555.rentmanagement.entity.RentManagement;
-import com.vishalpal555.rentmanagement.global.Constants;
-import com.vishalpal555.rentmanagement.global.MockData;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 
-public class FirestoreCloudDbService {
-    private static final String TAG = FirestoreCloudDbService.class.getName();
+public class RentManagementFirestoreService {
+    private static final String TAG = RentManagementFirestoreService.class.getName();
     FirebaseFirestore firestore;
     CollectionReference firestoreCollection;
     DocumentReference firestoreDocument;
+    private static final String RENT_MANAGEMENT_FIREBASE_REF = "rent_management";
     private static final String RENTMANAGEMENT_ADMINS_FIELD_STRING = "admins";
 
-    public  FirestoreCloudDbService(){
+    public RentManagementFirestoreService(){
         firestore = FirebaseFirestore.getInstance();
-        firestoreCollection = firestore.collection(Constants.RENT_MANAGEMENT_FIREBASE_REF);
+        firestoreCollection = firestore.collection(RENT_MANAGEMENT_FIREBASE_REF);
     }
 
     public void createRentManagementWithId(Activity activity, String userForeignKey){
@@ -50,7 +39,7 @@ public class FirestoreCloudDbService {
                                 Toast.makeText(activity, "Database created", Toast.LENGTH_LONG).show();
                             }
                         }).addOnFailureListener(e -> {
-                            Log.e(TAG, "createRentManagementDb: firestoreDocument.set", e);
+                            Log.e(TAG, "createRentManagementDb: firestoreDocument.set ", e);
                         });
             }
         }).addOnFailureListener(e -> {
@@ -72,13 +61,36 @@ public class FirestoreCloudDbService {
                             }
                         })
                         .addOnFailureListener(e -> {
-                            Log.e(TAG, "appendAdmins: firestoreDocument.update", e);
+                            Log.e(TAG, "appendAdmins: firestoreDocument.update ", e);
                         });
             } else {
-                Log.e(TAG, "appendAdmins: document doesn't exists");
+                Log.e(TAG, "appendAdmins: document doesn't exists ");
             }
         }).addOnFailureListener(e -> {
             Log.e(TAG, "appendAdmins: firestoreDocument.get() ", e);
         });
     }
+
+    public void removeAdmins(Activity activity, String rentManagementId, Set<String> removeAdminSet){
+        firestoreDocument = firestoreCollection.document(rentManagementId);
+        firestoreDocument.get().addOnCompleteListener(getTask -> {
+            if(getTask.getResult().exists()){
+                List<String> prevAdmins = (ArrayList<String>) getTask.getResult().getData().get(RENTMANAGEMENT_ADMINS_FIELD_STRING);
+                prevAdmins.removeAll(removeAdminSet);
+                firestoreDocument.update(RENTMANAGEMENT_ADMINS_FIELD_STRING, prevAdmins)
+                        .addOnCompleteListener(updateTask -> {
+                            if(updateTask.isSuccessful()){
+                                Log.i(TAG, "removeAdmins: firestoreDocument.update removed admins " + removeAdminSet);
+                                Toast.makeText(activity, "Admins removed", Toast.LENGTH_LONG).show();
+                            }
+                        })
+                        .addOnFailureListener(e -> {
+                            Log.e(TAG, "appendAdmins: firestoreDocument.update ", e);
+                        });
+            } else {
+                Log.e(TAG, "removeAdmins: document doesn't exists ");
+            }
+        });
+    }
+
 }
