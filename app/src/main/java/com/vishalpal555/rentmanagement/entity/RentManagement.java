@@ -15,12 +15,10 @@ public class RentManagement {
     private List<String> admins;
     private List<String> employees;
     private List<String> roomsList;
-    private List<String> tenantsList;
 
     public RentManagement(String defaultAdmin) {
         this.admins = new ArrayList<>(){{add(defaultAdmin);}};
         this.employees = new ArrayList<>();
         this.roomsList = new ArrayList<>();
-        this.tenantsList = new ArrayList<>();
     }
 }
