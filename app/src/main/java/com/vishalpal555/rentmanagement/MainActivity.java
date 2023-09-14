@@ -21,6 +21,7 @@ import com.vishalpal555.rentmanagement.global.Constants;
 import com.vishalpal555.rentmanagement.service.FirestoreCloudDbService;
 import com.vishalpal555.rentmanagement.service.Validator;
 
+import java.util.HashSet;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -34,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
     private TextView errorMsgMainActivity;
     private Button openGmailBtn;
     private Validator validator;
-    private FirebaseRealTimeDbService firebaseRealTimeDbService;
     private FirestoreCloudDbService firestoreCloudDbService;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mAuth = FirebaseAuth.getInstance();
         firebaseUser = mAuth.getCurrentUser();
+        firestoreCloudDbService = new FirestoreCloudDbService();
 
         ScheduledExecutorService userReloadSchedule = Executors.newSingleThreadScheduledExecutor();
         int delay = 0;
@@ -78,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
                 openGmailBtn.setVisibility(View.GONE);
 
                 //firebase document creation first time
-                firestoreCloudDbService = new FirestoreCloudDbService();
                 firestoreCloudDbService.createRentManagementWithId(this, firebaseUser.getEmail());
             } else {
                 errorMsgMainActivity.setText(getString(R.string.verify_user_alert_msg));
@@ -113,7 +113,8 @@ public class MainActivity extends AppCompatActivity {
         EditText inputTrial = findViewById(R.id.editTextTrial);
         Button trialBtn = findViewById(R.id.btnTrial);
         trialBtn.setOnClickListener(view -> {
-            Toast.makeText(this, "trial button clicked", Toast.LENGTH_LONG).show();
+//            Toast.makeText(this, "trial button clicked", Toast.LENGTH_LONG).show();
+            firestoreCloudDbService.appendAdmins(this, firebaseUser.getEmail(), new HashSet<>(){{add(inputTrial.getText().toString());}});
         });
     }
 }

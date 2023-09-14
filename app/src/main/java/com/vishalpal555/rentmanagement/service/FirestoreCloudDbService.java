@@ -19,14 +19,18 @@ import com.vishalpal555.rentmanagement.entity.RentManagement;
 import com.vishalpal555.rentmanagement.global.Constants;
 import com.vishalpal555.rentmanagement.global.MockData;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 public class FirestoreCloudDbService {
     private static final String TAG = FirestoreCloudDbService.class.getName();
     FirebaseFirestore firestore;
     CollectionReference firestoreCollection;
     DocumentReference firestoreDocument;
+    private static final String RENTMANAGEMENT_ADMINS_FIELD_STRING = "admins";
 
     public  FirestoreCloudDbService(){
         firestore = FirebaseFirestore.getInstance();
@@ -35,26 +39,46 @@ public class FirestoreCloudDbService {
 
     public void createRentManagementWithId(Activity activity, String userForeignKey){
         firestoreDocument = firestoreCollection.document(userForeignKey);
-        firestoreDocument.addSnapshotListener((value, error) -> {
-            if(!Objects.requireNonNull(value).exists()){
+        firestoreDocument.get().addOnCompleteListener(getTask -> {
+            if(getTask.getResult().exists()){
+                Log.i(TAG, "createRentManagementWithId: " +userForeignKey +" exists");
+            } else {
                 firestoreDocument.set(new RentManagement(userForeignKey))
-                        .addOnCompleteListener(task -> {
-                            if(task.isSuccessful()){
-                                Log.i(TAG, "createRentManagementWithId: document created for " +userForeignKey);
+                        .addOnCompleteListener(setTask -> {
+                            if (setTask.isSuccessful()) {
+                                Log.i(TAG, "createRentManagementWithId: firestoreDocument.set document created for " + userForeignKey);
                                 Toast.makeText(activity, "Database created", Toast.LENGTH_LONG).show();
                             }
                         }).addOnFailureListener(e -> {
-                            Log.e(TAG, "createRentManagementDb: ", e);
+                            Log.e(TAG, "createRentManagementDb: firestoreDocument.set", e);
                         });
-            } else{
-                Log.d(TAG, "createRentManagementWithId: document exists");
             }
-            if(error != null) Log.e(TAG, "createRentManagementWithId: ", error);
+        }).addOnFailureListener(e -> {
+            Log.e(TAG, "createRentManagementDb: firestoreDocument.get() ", e);
         });
     }
 
-    public void appendAdmins(Activity activity, String rentManagementId, List<String> newAdminList){
+    public void appendAdmins(Activity activity, String rentManagementId, Set<String> newAdminSet){
         firestoreDocument = firestoreCollection.document(rentManagementId);
-
+        firestoreDocument.get().addOnCompleteListener(getTask -> {
+            if(getTask.getResult().exists()) {
+                List<String> prevAdmins = (ArrayList<String>) getTask.getResult().getData().get(RENTMANAGEMENT_ADMINS_FIELD_STRING);
+                newAdminSet.addAll(prevAdmins);
+                firestoreDocument.update(RENTMANAGEMENT_ADMINS_FIELD_STRING, new ArrayList<>(newAdminSet))
+                        .addOnCompleteListener(updateTask -> {
+                            if(updateTask.isSuccessful()){
+                                Log.i(TAG, "appendAdmins: firestoreDocument.update added admins " + newAdminSet);
+                                Toast.makeText(activity, "Admins added", Toast.LENGTH_LONG).show();
+                            }
+                        })
+                        .addOnFailureListener(e -> {
+                            Log.e(TAG, "appendAdmins: firestoreDocument.update", e);
+                        });
+            } else {
+                Log.e(TAG, "appendAdmins: document doesn't exists");
+            }
+        }).addOnFailureListener(e -> {
+            Log.e(TAG, "appendAdmins: firestoreDocument.get() ", e);
+        });
     }
 }
