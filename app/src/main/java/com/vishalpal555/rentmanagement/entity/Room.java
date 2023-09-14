@@ -21,7 +21,7 @@ public class Room {
     private long meterReading;
     private float amountPerUnit;
     private HashMap<String, String> comments;
-    private Set<Tenant> previousTenants;
+    private List<Tenant> previousTenants;
     private Tenant currentTenant;
     private boolean isRoomVacant;
 
@@ -34,7 +34,7 @@ public class Room {
         this.amountPerUnit = amountPerUnit;
         this.comments = new HashMap<>();
         this.isRoomVacant = true;
-        this.previousTenants = new HashSet<>();
+        this.previousTenants = new ArrayList<>();
         this.currentTenant = new Tenant();
     }
 }
