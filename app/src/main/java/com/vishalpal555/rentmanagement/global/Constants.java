@@ -16,4 +16,6 @@ public class Constants {
     public static final boolean isMock = true;
     public static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
     public static final String FIREBASE_SERVER_REF = "https://rent-management-2bb30-default-rtdb.asia-southeast1.firebasedatabase.app";
+    public static final String SHARED_PREFERENCE_FILE_KEY = "com.vishalpal555.rentmanagement";
+    public static final String SHARED_PREFERENCE_RENTMANAGEMENT_DOCUMENT_KEY = "document_id_rent_management";
 }

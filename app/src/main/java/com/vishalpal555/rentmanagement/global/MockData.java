@@ -22,7 +22,7 @@ public class MockData {
 
     public static Room room1(){
         return new Room(
-                "A1",
+                "vishalpaldeveloper+dummy1@gmail.com",
                 "1",
                 "1",
                 "METER1",

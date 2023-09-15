@@ -3,18 +3,7 @@ package com.vishalpal555.rentmanagement.entity;
 import com.vishalpal555.rentmanagement.service.Validator;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
-
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-
-@Getter
-@Setter
 public class Tenant {
     private String tenantUsername;
     private String name;

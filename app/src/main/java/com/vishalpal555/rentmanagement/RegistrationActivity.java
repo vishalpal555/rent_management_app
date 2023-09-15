@@ -25,7 +25,6 @@ import com.vishalpal555.rentmanagement.service.Validator;
 
 import java.util.Objects;
 
-/** @noinspection Since15*/
 public class RegistrationActivity extends AppCompatActivity {
     private static final String TAG = RegistrationActivity.class.getName();
     EmailService emailService;

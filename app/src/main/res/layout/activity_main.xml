@@ -13,8 +13,10 @@
         android:text="no user"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.362" />
 
     <ImageButton
         android:id="@+id/mainActivityMenu"
@@ -69,17 +71,19 @@
         app:layout_constraintVertical_bias="0.055" />
 
     <Button
-        android:id="@+id/btnTrial"
+        android:id="@+id/createDatabaseBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Create Database"
+        android:text="Create New Database"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mainActivityTextTrial" />
+        app:layout_constraintTop_toBottomOf="@+id/mainActivityTextTrial"
+        app:layout_constraintVertical_bias="0.233" />
 
     <EditText
-        android:id="@+id/editTextTrial"
+        android:id="@+id/connectDatabaseInp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -87,7 +91,20 @@
         android:text="vishalpaldeveloper+dummy1@gmail.com"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnTrial" />
+        app:layout_constraintTop_toBottomOf="@+id/createDatabaseBtn"
+        app:layout_constraintVertical_bias="0.156" />
+
+    <Button
+        android:id="@+id/connectDatabaseBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Connect Database"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/connectDatabaseInp"
+        app:layout_constraintVertical_bias="0.048" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

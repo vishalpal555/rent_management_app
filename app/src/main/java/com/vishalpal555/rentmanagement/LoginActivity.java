@@ -22,7 +22,6 @@ import com.vishalpal555.rentmanagement.service.EmailService;
 import com.vishalpal555.rentmanagement.service.Validator;
 
 import java.util.Objects;
-/** @noinspection Since15*/
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = LoginActivity.class.getName();
     private TextView registerLink;
@@ -35,21 +34,16 @@ public class LoginActivity extends AppCompatActivity {
     Validator validator;
 
     @Override
-    public void onStart() {
-        super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null) {
-            Intent mainIntent = new Intent(this, MainActivity.class);
-            startActivity(mainIntent);
-        }
-    }
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
         mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser != null) {
+            Intent mainIntent = new Intent(this, MainActivity.class);
+            startActivity(mainIntent);
+        }
 
         Intent registrationIntent = new Intent(this, RegistrationActivity.class);
         registerLink = findViewById(R.id.registerLinkText);
@@ -63,7 +57,7 @@ public class LoginActivity extends AppCompatActivity {
 
         if(Constants.isMock){
             usernameInput.setText("vishalpaldeveloper+dummy1@gmail.com");
-            passwordInput.setText("12412343");
+            passwordInput.setText("123456");
         }
 
         loginBtn.setOnClickListener(view -> {
